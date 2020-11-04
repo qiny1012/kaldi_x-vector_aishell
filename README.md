@@ -8,15 +8,13 @@ x-vector的论文发表在ICASSP 2018，kaldi的核心开发者Daniel Povey也�
 
 [X-VECTORS: ROBUST DNN EMBEDDINGS FOR SPEAKER RECOGNITION](https://ieeexplore.ieee.org/document/8461375)
 
-
-
 #### 开始构建系统
 
 使用kaldi进行建立基于x-vector的说话人识别系统，主要是通过脚本来实现的。在官方项目x-vector(`~/kaldi/egs/sre16/v2`) 中，就是通过run.sh这个脚本来运行的。但是在迁移过程中有部分代码进行了修改，于是我将原有的run.sh脚本分成了9个内容更小的脚本，并且在jupyter notebook中运行，jupyter notebook记录了每一段脚本的log，可以帮助我们更好的理解脚本的含义。
 
 相关代码发布到github:
 
-
+https://github.com/qiny1012/kaldi_x-vector_aishell
 
 #### 准备工作
 
@@ -40,15 +38,16 @@ x-vector的论文发表在ICASSP 2018，kaldi的核心开发者Daniel Povey也�
 
 #### 运行脚本
 
-在jupyter notebook中打开，[使用kaldi在aishell上进行x-vector实验的流程.ipynb](http://localhost:8888/notebooks/repositorys/kaldi_x-vector_aishell/使用kaldi在aishell上进行x-vector实验的流程.ipynb)，按照步骤分别运行。
+在jupyter notebook中打开，[使用kaldi在aishell上进行x-vector实验的流程.ipynb](https://github.com/qiny1012/kaldi_x-vector_aishell/blob/master/%E4%BD%BF%E7%94%A8kaldi%E5%9C%A8aishell%E4%B8%8A%E8%BF%9B%E8%A1%8Cx-vector%E5%AE%9E%E9%AA%8C%E7%9A%84%E6%B5%81%E7%A8%8B.ipynb)，按照步骤分别运行。
 
 **1.准备训练集、测试集的配置文件**
 
-这一块脚本将当前的项目的目录中建立一个data文件，里面将生成一些配置文件。
+这段脚本将当前的项目的目录中建立一个data文件，里面将生成一些配置文件。
 
 核心的配置文件包括下面这些：
 
-​	    data
+```
+	    data
 ​		├── test
 ​		│   ├── spk2utt
 ​		│   ├── text
@@ -59,6 +58,7 @@ x-vector的论文发表在ICASSP 2018，kaldi的核心开发者Daniel Povey也�
 ​    		├── text
 ​    		├── utt2spk
 ​    		└── wav.scp
+```
 
 其中spk2utt文件是每个说话人和语音段的映射，text是每一个语音段的转义文本（没有有使用），utt2spk是每个语音段和说话人的映射，wav.scp是每个语音段和具体位置的映射。
 
@@ -78,11 +78,11 @@ x-vector的论文发表在ICASSP 2018，kaldi的核心开发者Daniel Povey也�
 
 **5.过滤语音**
 
-如代码中的注释，主要进行了4个工作，第一个工作，将data/train和data/train_aug的配置文件合并，配置文件合并在之前的代码中已经使用过；第二个工作，按照VAD的结果去除静音帧，并在每一段语音进行归一化（CMVN）；第三个工作，去除语音长度小于2s的语音，这个操作需要和在训练过程中的最大帧参数保持一致；第四个工作，去除语音数量少于8的说话人。
+代码主要进行了4个工作，第一个工作，将data/train和data/train_aug的配置文件合并，配置文件合并在之前的代码中已经使用过；第二个工作，按照VAD的结果去除静音帧，并在每一段语音进行归一化（CMVN）；第三个工作，去除语音长度小于2s的语音，这个操作需要和在训练过程中的最大帧参数保持一致；第四个工作，去除语音数量少于8的说话人。
 
 **6.训练x-vector**
 
-在开始执行下面的内容，生成一个0.raw的文件。如果没有这一步会出现错误，解决方法来自：https://blog.csdn.net/weixin_43056919/article/details/87480205
+在执行这个过程中会出现一个错误，根据 https://blog.csdn.net/weixin_43056919/article/details/87480205 中的描述，只需要生成一个0.raw的文件就可以。
 
 最终训练好的模型存放的位置是`exp/xvector_nnet_1a/final.raw`
 
