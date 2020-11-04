@@ -10,7 +10,7 @@ local/nnet3/xvector/prepare_feats_for_egs.sh --nj 40 --cmd "$train_cmd" \
     data/train_combined data/train_combined_no_sil exp/train_combined_no_sil
 utils/fix_data_dir.sh data/train_combined_no_sil
   
-## 3. 删除静音帧后删除过短的功能。
+## 3. 如果语音长度少于200帧，会被去除。200帧，（25ms帧长，10ms帧移），大约2s
 min_len=200
 mv data/train_combined_no_sil/utt2num_frames data/train_combined_no_sil/utt2num_frames.bak
 awk -v min_len=${min_len} '$2 > min_len {print $1, $2}' data/train_combined_no_sil/utt2num_frames.bak > data/train_combined_no_sil/utt2num_frames

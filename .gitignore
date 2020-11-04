@@ -1,8 +1,9 @@
-exp/
-data/
-mfcc/
-mfcc_aug/
-vad/
+/exp/
+/mfcc/
+/mfcc_aug/
+/vad/
 01_prepare_data.sh
 02_data_augment_and_mfcc.sh
 !!程序入口!!.ipynb
+/feature/
+/data/

@@ -2,10 +2,16 @@
 . ./cmd.sh
 
 
+## 计算训练集的x-vector
 nnet_dir=exp/xvector_nnet_1a
-sid/nnet3/xvector/extract_xvectors.sh --cmd "$train_cmd --mem 12G" --nj 40 \
+sid/nnet3/xvector/extract_xvectors.sh --cmd "$train_cmd --mem 12G" --nj 20\
     $nnet_dir data/train_combined \
     exp/xvectors_train_combined
+    
+## 计算训练集x-vector的均值
+$train_cmd exp/xvectors_train_combined/log/compute_mean.log \
+    ivector-mean scp:exp/xvectors_train_combined/xvector.scp \
+    exp/xvectors_train_combined/mean.vec || exit 1;
 
 # 利用LDA将数据进行降维
 # This script uses LDA to decrease the dimensionality prior to PLDA.

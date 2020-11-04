@@ -1,12 +1,6 @@
 . ./path.sh
 . ./cmd.sh
 
-
-
-# $train_cmd exp/xvectors_train_combined/log/compute_mean.log \
-#     ivector-mean scp:exp/xvectors_train_combined/xvector.scp \
-#     exp/xvectors_train_combined/mean.vec || exit 1;
-
 nnet_dir=exp/xvector_nnet_1a
 mfccdir=mfcc
 vaddir=vad

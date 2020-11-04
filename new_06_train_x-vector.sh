@@ -33,24 +33,24 @@ egs_dir=exp/xvector_nnet_1a/egs
 
 num_pdfs=$(awk '{print $2}' $data/utt2spk | sort | uniq -c | wc -l)
 
-# if [ $stage -le 4 ]; then
-#   echo "$0: Getting neural network training egs";
-#   # dump egs.
-#   if [[ $(hostname -f) == *.clsp.jhu.edu ]] && [ ! -d $egs_dir/storage ]; then
-#     utils/create_split_dir.pl \
-#      /home/qinyc/aishell/v2/xvector-$(date +'%m_%d_%H_%M')/$egs_dir/storage $egs_dir/storage
-#   fi
-#   sid/nnet3/xvector/get_egs.sh --cmd "$train_cmd" \
-#     --nj 8 \
-#     --stage 0 \
-#     --frames-per-iter 1000000000 \
-#     --frames-per-iter-diagnostic 100000 \
-#     --min-frames-per-chunk 100 \
-#     --max-frames-per-chunk 200 \
-#     --num-diagnostic-archives 3 \
-#     --num-repeats 35 \
-#     "$data" $egs_dir
-# fi
+if [ $stage -le 4 ]; then
+  echo "$0: Getting neural network training egs";
+  # dump egs.
+  if [[ $(hostname -f) == *.clsp.jhu.edu ]] && [ ! -d $egs_dir/storage ]; then
+    utils/create_split_dir.pl \
+     /home/qinyc/aishell/v2/xvector-$(date +'%m_%d_%H_%M')/$egs_dir/storage $egs_dir/storage
+  fi
+  sid/nnet3/xvector/get_egs.sh --cmd "$train_cmd" \
+    --nj 8 \
+    --stage 0 \
+    --frames-per-iter 1000000000 \
+    --frames-per-iter-diagnostic 100000 \
+    --min-frames-per-chunk 100 \
+    --max-frames-per-chunk 200 \
+    --num-diagnostic-archives 3 \
+    --num-repeats 35 \
+    "$data" $egs_dir
+fi
 
 
 if [ $stage -le 5 ]; then
@@ -122,7 +122,7 @@ if [ $stage -le 6 ]; then
     --trainer.optimization.minibatch-size=64 \
     --trainer.srand=$srand \
     --trainer.max-param-change=2 \
-    --trainer.num-epochs=20 \
+    --trainer.num-epochs=80 \
     --trainer.dropout-schedule="$dropout_schedule" \
     --trainer.shuffle-buffer-size=1000 \
     --egs.frames-per-eg=1 \

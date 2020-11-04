@@ -2,14 +2,14 @@
 . ./path.sh
 
 steps/data/reverberate_data_dir.py \
---rir-set-parameters "0.5, /home/qinyc/openSLR/SLR28_rir/RIRS_NOISES/simulated_rirs/smallroom/rir_list" \
---rir-set-parameters "0.5, /home/qinyc/openSLR/SLR28_rir/RIRS_NOISES/simulated_rirs/mediumroom/rir_list" \
---speech-rvb-probability 1 \
---pointsource-noise-addition-probability 0 \
---isotropic-noise-addition-probability 0 \
---num-replications 1 \
---source-sampling-rate 16000 \
-data/train data/train_reverb
+    --rir-set-parameters "0.5, /home/qinyc/openSLR/SLR28_rir/RIRS_NOISES/simulated_rirs/smallroom/rir_list" \
+    --rir-set-parameters "0.5, /home/qinyc/openSLR/SLR28_rir/RIRS_NOISES/simulated_rirs/mediumroom/rir_list" \
+    --speech-rvb-probability 1 \
+    --pointsource-noise-addition-probability 0 \
+    --isotropic-noise-addition-probability 0 \
+    --num-replications 1 \
+    --source-sampling-rate 16000 \
+    data/train data/train_reverb
 
 cp data/train/vad.scp data/train_reverb/
 utils/copy_data_dir.sh --utt-suffix "-reverb" data/train_reverb data/train_reverb.new
@@ -17,9 +17,6 @@ rm -rf data/train_reverb
 mv data/train_reverb.new data/train_reverb
 
 
-
-# Prepare the MUSAN corpus, which consists of music, speech, and noise
-# suitable for augmentation.
 steps/data/make_musan.sh --sampling-rate 16000 /home/qinyc/openSLR/SLR17_musan/musan data
 
 # Get the duration of the MUSAN recordings.  This will be used by the
@@ -38,4 +35,3 @@ steps/data/augment_data_dir.py --utt-suffix "babble" --bg-snrs "20:17:15:13" --n
 
 # Combine reverb, noise, music, and babble into one directory.
 utils/combine_data.sh data/train_aug data/train_reverb data/train_noise data/train_music data/train_babble
-
