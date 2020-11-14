@@ -2,7 +2,7 @@
 
 **写在前面**
 
-整个系统可以分为三个部分，第一，前端预处理部分，主要包括mfcc特征提取，VAD，数据扩充（增加混响、增加不同类型的噪声）等；第二，基于TDNN的特征提取器，该结构生成说话人表征，说话人表征也可以被称为embedding、x-vector；第三，后端处理，对于说话人表征，采用LDA进行降维并训练PLDA模型对测试对进行打分。
+整个系统可以分为三个部分，第一，前端预处理部分，主要包括mfcc特征提取，VAD，数据扩充（增加混响、增加不同类型的噪声）等；第二，训练基于TDNN的特征提取器，该结构生成说话人表征，说话人表征也可以被称为embedding、x-vector；第三，后端处理，对于说话人表征，采用LDA进行降维并训练PLDA模型对测试对进行打分。
 
 x-vector的论文发表在ICASSP 2018，kaldi的核心开发者Daniel Povey也是这篇论文的作者之一，论文来链接如下：
 
@@ -10,7 +10,7 @@ x-vector的论文发表在ICASSP 2018，kaldi的核心开发者Daniel Povey也�
 
 #### 开始构建系统
 
-使用kaldi进行建立基于x-vector的说话人识别系统，主要是通过脚本来实现的。在官方项目x-vector(`~/kaldi/egs/sre16/v2`) 中，就是通过run.sh这个脚本来运行的。但是在迁移过程中有部分代码进行了修改，于是我将原有的run.sh脚本分成了9个内容更小的脚本，并且在jupyter notebook中运行，jupyter notebook记录了每一段脚本的log，可以帮助我们更好的理解脚本的含义。
+使用kaldi进行建立基于x-vector的说话人识别系统，主要是通过脚本来实现的。在官方项目x-vector(`~/kaldi/egs/sre16/v2`) 中，通过run.sh脚本在SRE相关数据库上进行训练。我们将这部分代码迁移到aishell数据库上，在迁移过程中有部分代码进行了修改。于是将原有的run.sh脚本分成了9个内容更小的脚本，并且在jupyter notebook中运行，jupyter notebook可以记录了每一段脚本的log，能够帮助我们更好的理解每一段脚本的含义。
 
 相关代码发布到github:
 
