@@ -72,7 +72,9 @@ https://github.com/qiny1012/kaldi_x-vector_aishell
 
 在混响增强中，生成的文件中总是没有数据库的前缀，导致在下一步过程中无法合成并提取特征。
 
-解决方法：将step/data/reverberate_data_dir.py中539行改为：`rir.rir_rspecifier = "sox /home/RIR_NOISE存放的目录/{0} -r {1} -t wav - |".format(rir.rir_rspecifier, sampling_rate)`
+解决方法一：将step/data/reverberate_data_dir.py中539行改为：`rir.rir_rspecifier = "sox /home/RIR_NOISE存放的目录/{0} -r {1} -t wav - |".format(rir.rir_rspecifier, sampling_rate)`
+
+解决方法二：在工作目录下建立RIRS-NOISES的链接，`ln -s /home/YOU_RIRS_NOISES_PATH ./`.
 
 **4.提取扩充数据的mfcc表征**
 
