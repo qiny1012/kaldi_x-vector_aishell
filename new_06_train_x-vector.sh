@@ -38,7 +38,7 @@ if [ $stage -le 4 ]; then
   # dump egs.
   if [[ $(hostname -f) == *.clsp.jhu.edu ]] && [ ! -d $egs_dir/storage ]; then
     utils/create_split_dir.pl \
-     /home/qinyc/aishell/v2/xvector-$(date +'%m_%d_%H_%M')/$egs_dir/storage $egs_dir/storage
+     ./xvector-$(date +'%m_%d_%H_%M')/$egs_dir/storage $egs_dir/storage
   fi
   sid/nnet3/xvector/get_egs.sh --cmd "$train_cmd" \
     --nj 8 \
