@@ -69,14 +69,9 @@ https://github.com/qiny1012/kaldi_x-vector_aishell
 **3.数据扩充（加混响，加噪音）**
 
 每个段语音分别被加混响，加noise，加music，加speech增强，扩充了4倍的数据。
+RIRS_NOISES数据库需要解压到当前文件夹下，即`/YOU_path/v2/`。若下一步操作中出现`(360294 != 480392),...,Less than 95% the features were successfully generated. Probably a serious error.`之类的警告，则为系统找不到混响数据库，请检查RIR_NOISES数据库的位置。
 
-在混响增强中，生成的文件中总是没有数据库的前缀，导致在下一步过程中无法合成并提取特征。
-
-解决方法一：将step/data/reverberate_data_dir.py中539行改为：`rir.rir_rspecifier = "sox /home/RIR_NOISE存放的目录/{0} -r {1} -t wav - |".format(rir.rir_rspecifier, sampling_rate)`
-
-解决方法二：在工作目录下建立RIRS-NOISES的链接，`ln -s /home/YOU_RIRS_NOISES_PATH ./`.
-
-**4.提取扩充数据的mfcc表征**
+**4.提取扩充数据的mfcc表征和VAD**
 
 **5.过滤语音**
 
